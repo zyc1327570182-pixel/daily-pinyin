@@ -19,3 +19,9 @@
 系统提供的 glog、gflags、yaml-cpp、OpenCC、marisa、Fcitx5、C/C++ 运行库等继续由发行版维护，不随本包替换。相关归属声明也保留于 `third-party/`。
 
 Fluent Light 皮肤图片由本项目绘制，采用通用白底圆角与蓝色选中风格，未使用微软图标、字体文件或商标资产。Noto Sans CJK SC 字体由系统提供。
+
+## 剪贴板交互模块
+
+`src/clipboard/` 基于 Fcitx5 5.1.7 的剪贴板模块（CSSlayer 及贡献者，LGPL-2.1-or-later），保留版权头和完整修改后源码。修改包括：方向键选择与跨页、翻页自动选中、Delete 单项删除、Backspace 不删除、清空二次确认与中文操作提示。`orderedset.h` 是上游 `misc_p.h` 中 OrderedSet 的原样提取，保留原许可。
+
+当前预编译扩展通过 X11/XWayland 收集文本，在已验证的 GNOME Wayland 桌面通过 XWayland 剪贴板桥接使用；原生 wlr-data-control 支持不在此构建中启用。系统 Fcitx5 库保持原样。

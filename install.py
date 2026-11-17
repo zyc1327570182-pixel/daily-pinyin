@@ -16,6 +16,7 @@ TARGETS = [
     '.config/fcitx5/config', '.config/fcitx5/profile',
     '.local/share/fcitx5/addon/rime.conf',
     '.local/share/fcitx5/inputmethod/rime.conf',
+    '.local/share/fcitx5/addon/clipboard.conf',
     '.local/share/fcitx5/rime', '.local/lib/daily-pinyin',
     '.config/fcitx5/conf/classicui.conf',
     '.local/share/fcitx5/themes/fluent-light',
@@ -130,6 +131,9 @@ def main():
         addon = read_ini(ROOT / 'payload/rime-addon.conf')
         addon['Addon']['Library'] = 'export:' + str(prefix / 'fcitx5/librime')
         write_ini(home / '.local/share/fcitx5/addon/rime.conf', addon)
+        clipboard_addon = read_ini(ROOT / 'payload/clipboard-addon.conf')
+        clipboard_addon['Addon']['Library'] = str(prefix / 'fcitx5/libclipboard')
+        write_ini(home / '.local/share/fcitx5/addon/clipboard.conf', clipboard_addon)
         im = read_ini(ROOT / 'payload/rime-inputmethod.conf')
         im['InputMethod'].update({'Name': '日用拼音', 'Name[zh_CN]': '日用拼音',
                                   'Label': '中', 'LangCode': 'zh_CN'})

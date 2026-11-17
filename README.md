@@ -47,7 +47,7 @@ cd daily-pinyin-v0.1.0
 
 ## 启用剪贴板历史
 
-安装后在桌面终端运行 `./enable-clipboard.sh`，即可在输入框中按 **Win+V**（或 Ctrl+分号）打开历史，数字选取、Esc 关闭、Backspace/Delete 清空。最多 20 条文本，仅保存在当前输入法进程内存中，重启后清空。支持英文键盘状态。
+安装后在桌面终端运行 `./enable-clipboard.sh`，即可在输入框中按 **Win+V**（或 Ctrl+分号）打开历史，上下方向键选取、左右方向键翻页、Enter 插入、Esc 关闭；Delete 仅删当前项，Ctrl+Shift+Delete 后 Enter 确认清空。最多 20 条文本，仅保存在当前输入法进程内存中，重启后清空。支持英文键盘状态。
 
 GNOME 下会释放原先通知中心占用的 Win+V，保留 Win+M；设置先备份，可用 `./enable-clipboard.sh --restore` 撤销。其他桌面如拦截 Win+V，需自行解除冲突。需要 `python3-gi`。
 

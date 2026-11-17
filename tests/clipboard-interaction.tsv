@@ -1,0 +1,10 @@
+PASS	Super+V opens and number 1 inserts latest text
+PASS	Escape closes without inserting
+PASS	clipboard also works with English keyboard
+PASS	Backspace leaves history unchanged
+PASS	Down arrow selects next item
+PASS	Right arrow moves to next page
+PASS	Down arrow crosses page boundary
+PASS	Delete removes only selected entry
+PASS	Cancel clear-all keeps history
+PASS	Clear-all requires explicit confirmation

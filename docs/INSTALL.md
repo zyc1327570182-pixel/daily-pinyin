@@ -51,7 +51,7 @@ sudo apt install fcitx5 fcitx5-modules fcitx5-frontend-gtk3 fcitx5-frontend-gtk4
 
 ## Win+V 剪贴板历史
 
-安装后运行 `./enable-clipboard.sh`。使用 Fcitx5 自带剪贴板模块，无需另装常驻服务。最多 20 条文本，仅保存在进程内存中；重启 Fcitx5 后清空。复制文本后聚焦应用输入框，Win+V 打开，数字选取，Esc 关闭，Backspace/Delete 清空历史。保留 Ctrl+分号作为备用快捷键，中英文状态均可用。
+安装后运行 `./enable-clipboard.sh`。使用基于 Fcitx5 剪贴板模块修改的扩展，无需另装常驻服务。首次升级此扩展会短暂重启 Fcitx5。最多 20 条文本，仅保存在进程内存中；重启 Fcitx5 后清空。复制文本后聚焦应用输入框，Win+V 打开，上下方向键选取，左右方向键翻页，Enter 插入，Esc 关闭；Delete 仅删当前项，Ctrl+Shift+Delete 后 Enter 确认清空。Backspace 不删除历史。保留 Ctrl+分号作为备用快捷键，中英文状态均可用。
 
 GNOME 的通知中心原来占用 Win+V，脚本只解除这一绑定，保留 Win+M。旧配置单独备份，可运行 `./enable-clipboard.sh --restore` 恢复；此操作与完整安装、升级恢复相互独立。脚本不保存、读取或上传历史文本。
 

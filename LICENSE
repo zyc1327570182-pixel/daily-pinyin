@@ -24,3 +24,6 @@ This license covers the project's original installer, upgrade/restore and
 packaging scripts, tests, documentation, configuration additions and theme.
 Third-party code/data and derived patches retain their upstream licenses;
 see NOTICE.md and third-party/. The fcitx5-rime patch is under LGPL-2.1-or-later.
+
+The modified clipboard addon in src/clipboard/ is derived from Fcitx5
+and licensed under LGPL-2.1-or-later; see its source headers and third-party/LGPL-2.1.

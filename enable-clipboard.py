@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Enable Fcitx5 clipboard history and release GNOME's Win+V binding."""
-import argparse,datetime,json,os,tempfile
+import argparse,datetime,json,os,tempfile,subprocess,sys,time
 from pathlib import Path
 from install import session_environment
 
@@ -9,6 +9,8 @@ CONFIG='fcitx://config/addon/clipboard'
 def main():
     ap=argparse.ArgumentParser(description='启用 Win+V 剪贴板历史；--restore 撤销最近一次设置')
     ap.add_argument('--restore',action='store_true');args=ap.parse_args()
+    if not args.restore:
+        subprocess.run([sys.executable,str(Path(__file__).with_name('upgrade-clipboard.py'))],check=True)
     os.environ.update(session_environment())
     # dconf's cache is disposable; do not depend on a launcher's cache permissions.
     with tempfile.TemporaryDirectory(prefix='daily-pinyin-dconf-') as cache:
@@ -20,7 +22,12 @@ def main():
         def variant(value):
             if isinstance(value,dict):return GLib.Variant('a{sv}',{k:variant(v) for k,v in value.items()})
             return GLib.Variant('s',str(value))
-        old=call('GetConfig','(s)',(CONFIG,))[0]
+        for attempt in range(50):
+            try:
+                old=call('GetConfig','(s)',(CONFIG,))[0];break
+            except GLib.Error:
+                if attempt==49:raise
+                time.sleep(.1)
         settings=None;shell_keys=None
         schema=Gio.SettingsSchemaSource.get_default().lookup('org.gnome.shell.keybindings',True)
         if schema and 'GNOME' in os.environ.get('XDG_CURRENT_DESKTOP','').upper():
@@ -33,6 +40,7 @@ def main():
             if settings is not None and saved['shell_keys'] is not None:
                 if not settings.set_strv('toggle-message-tray',saved['shell_keys']):raise RuntimeError('无法恢复桌面快捷键。')
                 Gio.Settings.sync()
+            subprocess.run([sys.executable,str(Path(__file__).with_name('upgrade-clipboard.py')),'--restore'],check=True)
             print('已恢复之前的剪贴板快捷键设置。');return
         backup=state/'clipboard-backups'/datetime.datetime.now().strftime('%Y%m%d-%H%M%S-%f')
         backup.parent.mkdir(parents=True,exist_ok=True)
@@ -55,7 +63,8 @@ def main():
             if settings is not None:settings.set_strv('toggle-message-tray',shell_keys);Gio.Settings.sync()
             raise
         print('已启用 Win+V 剪贴板历史，保留 Ctrl+; 备用键，最多 20 条。')
-        print('在应用输入框中使用；数字选取，Esc 关闭，Backspace/Delete 清空历史。')
+        print('在应用输入框中使用；↑↓选择，←→翻页，Enter 插入，Esc 关闭。')
+        print('Delete 只删当前项；Ctrl+Shift+Delete 后 Enter 确认才清空。Backspace 不删除。')
         print('仅保存在当前输入法进程内存中，重启后清空；当前版本支持文本。')
         print('撤销：python3 enable-clipboard.py --restore')
 if __name__=='__main__':main()

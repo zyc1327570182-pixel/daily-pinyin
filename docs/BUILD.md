@@ -52,3 +52,16 @@ python3 scripts/package_release.py --payload-from /path/to/validated-offline-dir
 打包器拒绝个人词库、用户标识、同步目录、日志、备份及逃出包外的符号链接，统一 tar 的所有者字段，并生成 `SHA256SUMS`。发布前仍需检查 NOTICE、源码归档和安装结果。
 
 CI 只验证脚本与临时用户目录的备份/恢复行为。原生引擎与真实桌面验证记录见 `docs/VALIDATION.md`。
+
+## 改良剪贴板模块
+
+在已有 Fcitx5 开发包及 `libxcb-ewmh-dev` 的 Ubuntu 24.04 环境中：
+
+```bash
+cmake -S src/clipboard -B build/clipboard -DCMAKE_BUILD_TYPE=Release
+cmake --build build/clipboard -j4
+mkdir -p payload/runtime/fcitx5
+cp build/clipboard/libclipboard.so payload/runtime/fcitx5/
+```
+
+离线包已经包含该库和完整修改后源码。`enable-clipboard.sh` 会先升级用户目录中的模块并短暂重启 Fcitx5，再设置 Win+V；历史只在内存中，重启会清空。升级过程单独备份模块与覆盖配置，`enable-clipboard.sh --restore` 可恢复。

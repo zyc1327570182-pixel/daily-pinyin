@@ -9,5 +9,5 @@ jobs:
       - uses: actions/checkout@v4
       - run: python3 -m pip install PyYAML
       - run: python3 -m unittest discover -s tests -v
-      - run: python3 -m compileall -q install.py upgrade.py restore.py restore-upgrade.py scripts tests
-      - run: bash -n install.sh upgrade.sh restore.sh restore-upgrade.sh scripts/build_native.sh
+      - run: python3 -m compileall -q install.py upgrade.py restore.py restore-upgrade.py enable-clipboard.py upgrade-clipboard.py download-model.py scripts tests
+      - run: bash -n install.sh upgrade.sh restore.sh restore-upgrade.sh install-online.sh enable-clipboard.sh scripts/build_native.sh

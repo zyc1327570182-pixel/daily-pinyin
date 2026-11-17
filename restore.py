@@ -5,6 +5,8 @@ import datetime
 import json
 from pathlib import Path
 import shutil
+import subprocess
+import sys
 from install import copy_path, restart, session_environment, stop
 
 def main():
@@ -18,6 +20,9 @@ def main():
     manifest = json.loads((backup / 'manifest.json').read_text(encoding='utf-8'))
     if Path(manifest['home']) != home:
         raise SystemExit('备份的用户目录不匹配。')
+    native_backup = home / '.local/share/daily-pinyin/latest-clipboard-module-backup'
+    if not args.no_restart and native_backup.exists():
+        subprocess.run([sys.executable,str(Path(__file__).with_name('upgrade-clipboard.py')),'--restore'],check=True)
     env = None
     if not args.no_restart:
         env = session_environment()
