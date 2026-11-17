@@ -25,7 +25,7 @@ def archive(source,target):
         tar.add(source,arcname=source.name,filter=normalized)
 
 def main():
-    ap=argparse.ArgumentParser();ap.add_argument('--payload-from',type=Path,required=True);ap.add_argument('--output',type=Path,default=ROOT/'dist');a=ap.parse_args()
+    ap=argparse.ArgumentParser();ap.add_argument('--online',action='store_true');ap.add_argument('--payload-from',type=Path,required=True);ap.add_argument('--output',type=Path,default=ROOT/'dist');a=ap.parse_args()
     supplied=a.payload_from.resolve();out=a.output.resolve();out.mkdir(parents=True,exist_ok=True)
     for required in ['payload/runtime/lib/librime.so.1.17.0','payload/rime/build/wanxiang.table.bin','payload/rime/build/wanxiang.prism.bin','payload/rime/wanxiang-lts-zh-hans.gram','sources/frontend-source.tar.gz']:
         if not (supplied/required).is_file():raise SystemExit('Missing validated input: '+required)
@@ -47,7 +47,9 @@ def main():
             raise SystemExit('Compiled schema does not match this version; redeploy and test before packaging.')
         digest=hashlib.sha256((stage/'payload/rime/wanxiang-lts-zh-hans.gram').read_bytes()).hexdigest()
         if digest!=json.loads((stage/'versions.json').read_text())['model']['sha256']:raise SystemExit('Model hash mismatch')
-        package=out/f'daily-pinyin-{VERSION}-ubuntu24.04-x86_64.tar.gz';archive(stage,package)
+        if a.online:(stage/'payload/rime/wanxiang-lts-zh-hans.gram').unlink()
+        suffix='-online' if a.online else ''
+        package=out/f'daily-pinyin-{VERSION}-ubuntu24.04-x86_64{suffix}.tar.gz';archive(stage,package)
         entries=[]
         with tarfile.open(package) as tar:
             for m in tar:

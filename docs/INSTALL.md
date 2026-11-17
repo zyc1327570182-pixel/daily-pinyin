@@ -9,12 +9,16 @@
 Ubuntu 24.04 可通过系统软件管理器安装这些包；例如（依赖安装需要管理员权限）：
 
 ```bash
-sudo apt install fcitx5 fcitx5-modules fcitx5-frontend-gtk3 fcitx5-frontend-gtk4 fcitx5-frontend-qt5 fcitx5-frontend-qt6 python3-yaml fonts-noto-cjk libgoogle-glog0v6t64 libgflags2.2 libyaml-cpp0.8 libopencc1.1 libmarisa0
+sudo apt install fcitx5 fcitx5-modules fcitx5-frontend-gtk3 fcitx5-frontend-gtk4 fcitx5-frontend-qt5 fcitx5-frontend-qt6 python3-yaml python3-gi fonts-noto-cjk libgoogle-glog0v6t64 libgflags2.2 libyaml-cpp0.8 libopencc1.1 libmarisa0
 ```
 
 按照 [Fcitx5 的发行版配置说明](https://fcitx-im.org/wiki/Setup_Fcitx_5) 将桌面输入法框架设为 Fcitx5。包不自动改全局环境变量；首次切换框架后可能需要注销登录。
 
-## 新装
+## 首次联网安装版
+
+下载文件名以 `-online.tar.gz` 结尾的包，校验解压后执行 `./install-online.sh`。它先从万象官方 GitHub 下载约 389 MiB 的固定模型，验证 SHA256，通过后才进入安装流程。下载失败或校验失败时不修改当前输入法，重试不会覆盖已校验的模型。安装完成后输入完全离线。
+
+## 完整离线包新装
 
 从 Releases 下载具名离线包，核对 SHA256SUMS，解压后执行 `./install.sh`。预编译词库已包含，无需现场编译。脚本会备份受影响的 Fcitx5 配置、Rime 目录、日用拼音运行库和皮肤，随后安装并短暂重启输入法。
 
@@ -44,3 +48,11 @@ sudo apt install fcitx5 fcitx5-modules fcitx5-frontend-gtk3 fcitx5-frontend-gtk4
 确认当前状态显示“中”，输入 `nihao` 应能看到“你好”。如果状态显示“en”，按一次 Shift。若所有应用均无候选，检查 Fcitx5 是否运行以及当前选中的输入法是否为日用拼音；若仅某个应用异常，记录其版本、安装方式（原生、Snap、Flatpak）及 X11/Wayland 类型。
 
 运行日志位于 `~/.local/share/daily-pinyin/session.log`。分享日志前请删掉可能包含的私人输入。不要分享 `*.userdb`、`user.yaml`、`installation.yaml`、同步和备份目录。
+
+## Win+V 剪贴板历史
+
+安装后运行 `./enable-clipboard.sh`。使用 Fcitx5 自带剪贴板模块，无需另装常驻服务。最多 20 条文本，仅保存在进程内存中；重启 Fcitx5 后清空。复制文本后聚焦应用输入框，Win+V 打开，数字选取，Esc 关闭，Backspace/Delete 清空历史。保留 Ctrl+分号作为备用快捷键，中英文状态均可用。
+
+GNOME 的通知中心原来占用 Win+V，脚本只解除这一绑定，保留 Win+M。旧配置单独备份，可运行 `./enable-clipboard.sh --restore` 恢复；此操作与完整安装、升级恢复相互独立。脚本不保存、读取或上传历史文本。
+
+部分应用绕过输入法，或未配置 Fcitx5 输入模块，可能不能打开该面板。它是输入框里的文本历史，不是文件或图片剪贴板管理器。

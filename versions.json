@@ -19,5 +19,14 @@
     "context_timeout_ms": 30000,
     "max_learned_phrase_length": 12,
     "targeted_typo_rules": 3
+  },
+  "clipboard": {
+    "hotkeys": [
+      "Super+V",
+      "Control+semicolon"
+    ],
+    "entries": 20,
+    "storage": "process memory",
+    "setup": "enable-clipboard.sh"
   }
 }

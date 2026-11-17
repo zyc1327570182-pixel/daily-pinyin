@@ -43,6 +43,8 @@ https://github.com/amzxyz/rime-wanxiang/releases/download/v18.1.13/rime-wanxiang
 ```bash
 python3 -m unittest discover -s tests -v
 python3 scripts/package_release.py --payload-from /path/to/validated-offline-directory --output dist
+# 省略模型，首次安装下载并校验：
+python3 scripts/package_release.py --payload-from /path/to/validated-offline-directory --output dist/online --online
 ```
 
 `--payload-from` 指向含 `payload/`、`sources/` 的已验证离线包目录。脚本使用该目录的运行库和干净上游数据，并叠加仓库中的配置与主题。若修改了 Rime 方案，必须先重新部署并验证该目录的 `build/` 产物；打包器不会替代引擎编译方案。
