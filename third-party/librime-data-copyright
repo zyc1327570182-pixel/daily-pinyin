@@ -1,0 +1,211 @@
+Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
+Upstream-Name: brise
+Source: https://github.com/rime/brise
+
+Files: *
+Copyright: GONG Chen <chen.sst@gmail.com>
+License: GPL-3
+
+Files: plum/package/rime/stroke/*
+Copyright: 四季的風, 雪齋, 瑾昀 <cokunhui@gmail.com>
+License: GPL-3
+
+Files: plum/package/rime/ipa/ipa_yunlong*.yaml
+Copyright: 潘悟雲, 李龍
+License: LGPL-3
+
+Files: plum/package/rime/ipa/*
+Copyright: Patrick <ipatrickmac@qq.com>
+           GONG Chen <chen.sst@gmail.com>
+License: LGPL-3
+
+Files: plum/package/rime/middle-chinese/sampheng.schema.yaml
+       plum/package/rime/middle-chinese/zyenpheng.*.yaml
+Copyright: 古韻 <biopolyhedron@gmail.com>
+License: GPL-3
+
+Files: plum/package/rime/wugniu/*
+Copyright: 上海閒話abc <tzyyiggnih@yahoo.com.cn>
+           吳語越音 <zhufya@mail.ustc.edu.cn>
+License: GPL-3
+
+Files: plum/package/rime/cangjie/cangjie5.dict.yaml
+       plum/package/rime/wubi/wubi86.dict.yaml
+       plum/package/rime/quick/quick5.dict.yaml
+Copyright: acevery (Yu Yuwei)
+License: LGPL-2+
+
+Files: plum/package/rime/cangjie/cangjie5*.schema.yaml
+       plum/package/rime/bopomofo/bopomofo*.schema.yaml
+       plum/package/rime/wubi/wubi86.schema.yaml
+       plum/package/rime/wubi/wubi_*.schema.yaml
+       plum/package/rime/quick/quick5.schema.yaml
+Copyright: GONG Chen <chen.sst@gmail.com>
+License: LGPL-2+
+
+Files:
+ plum/package/rime/jyutping/jyutping.dict.yaml
+ plum/package/rime/jyutping/jyutping.*.dict.yaml
+Copyright: GONG Chen <chen.sst@gmail.com>
+License: GPL-2 or LGPL-2
+
+Files: plum/package/rime/jyutping/jyutping.schema.yaml
+Copyright: GONG Chen <chen.sst@gmail.com>
+License: LGPL-3
+
+Files: plum/package/rime/prelude/symbols.yaml
+Copyright:
+ Gong Chen <chen.sst@gmail.com>
+ Patrick <ipatrickmac@qq.com>
+License: LGPL-3
+
+Files: plum/package/rime/prelude/*
+Copyright: Gong Chen <chen.sst@gmail.com>
+License: LGPL-3
+
+Files: plum/package/rime/jyutping/yale.schema.yaml
+Copyright: 幸延 <a0726h77@gmail.com>
+License: LGPL-3
+
+Files: plum/package/rime/pinyin-simp/pinyin_simp.*.yaml
+Copyright: GONG Chen and others
+License: Apache-2
+
+Files: plum/package/rime/scj/scj6.dict.yaml
+Copyright: 麥志洪 <makchehu@netvigator.com>
+License: GPL-3+
+
+Files: plum/package/rime/emoji/opencc/*
+Copyright: 雪齋 <leoyoontsaw@gmail.com>
+License: LGPL-3
+
+Files: plum/package/rime/emoji/*
+Copyright: 雪齋 <leoyoontsaw@gmail.com>
+           Kunki Chou
+License: LGPL-3
+
+Files: plum/package/rime/array/*
+Copyright: Jiehong Ma <ma.jiehong@gmail.com>
+License: GPL-3
+
+Files: plum/package/rime/soutzoe/soutzoe.*.yaml
+Copyright: 寒寒豆, 吳語越音 <zhufya@mail.ustc.edu.cn>
+License: GPL-3
+
+Files: plum/package/rime/luna-pinyin/luna_pinyin*.yaml
+       plum/package/rime/essay/essay.txt
+Copyright: Gong Chen <chen.sst@gmail.com>
+           Kunki Chiu <cokunhui@gmail.com>
+License: LGPL-2+
+Comment:
+ refined data from Chewing / 新酷音 (LGPL),
+ opencc / 開放中文轉換 (Apache License version 2),
+ Android Pinyin IME (Apache License version 2),
+ moedict.tw／萌典 (CC0 1.0)
+
+Files: debian/*
+Copyright: 2012, Qijiang Fan <fqj1994@gmail.com>
+           2018, Boyuan Yang <073plan@gmail.com>
+License: GPL-3
+
+License: GPL-3
+ This program is free software: you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation, either version 3 of the License.
+ .
+ This program is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+ .
+ You should have received a copy of the GNU General Public License
+ along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ .
+ On Debian systems, the complete text of the GNU General
+ Public License version 3 can be found in "/usr/share/common-licenses/GPL-3".
+
+License: GPL-3+
+ This program is free software; you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation; either version 3 of the License, or
+ (at your option) any later version.
+ .
+ This program is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+ .
+ You should have received a copy of the GNU General Public License along
+ with this program; if not, see see <https://www.gnu.org/licenses/>
+ .
+ On Debian systems, the complete text of the GNU General
+ Public License version 3 can be found in "/usr/share/common-licenses/GPL-3".
+
+License: GPL-2
+ This package is free software; you can redistribute it and/or modify
+ it under the terms of the GNU General Public License, version 2 as
+ published by the Free Software Foundation.
+ .
+ This package is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+ .
+ You should have received a copy of the GNU General Public License
+ along with this program. If not, see <https://www.gnu.org/licenses/>
+ .
+ On Debian systems, the complete text of the GNU General
+ Public License version 2 can be found in "/usr/share/common-licenses/GPL-2".
+
+License: Apache-2
+ On Debian systems, the complete text of the Apache License Version 2
+ can be found in "/usr/share/common-licenses/Apache-2.0".
+
+License: LGPL-2+
+ This package is free software; you can redistribute it and/or
+ modify it under the terms of the GNU Library General Public
+ License as published by the Free Software Foundation; either
+ version 2 of the License, or (at your option) any later version.
+ .
+ This package is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ Library General Public License for more details.
+ .
+ You should have received a copy of the GNU Library General Public
+ License along with this package; if not, see <https://www.gnu.org/licenses/>
+ .
+ On Debian systems, the complete text of GNU Library/Lesser General
+ Public License version 2 can be found in "/usr/share/common-licenses/LGPL-2".
+
+License: LGPL-2
+ This package is free software; you can redistribute it and/or
+ modify it under the terms of the GNU Library General Public
+ License, version 2 as published by the Free Software Foundation.
+ .
+ This package is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ Library General Public License for more details.
+ .
+ You should have received a copy of the GNU Library General Public
+ License along with this package; if not, see <https://www.gnu.org/licenses/>
+ .
+ On Debian systems, the complete text of GNU Library/Lesser General
+ Public License version 2 can be found in "/usr/share/common-licenses/LGPL-2".
+
+License: LGPL-3
+ This package is free software; you can redistribute it and/or
+ modify it under the terms of the GNU Library General Public
+ License, version 3 as published by the Free Software Foundation.
+ .
+ This package is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ Library General Public License for more details.
+ .
+ You should have received a copy of the GNU Library General Public
+ License along with this package; if not, see <https://www.gnu.org/licenses/>
+ .
+ On Debian systems, the complete text of GNU Library/Lesser General
+ Public License version 3 can be found in "/usr/share/common-licenses/LGPL-3".

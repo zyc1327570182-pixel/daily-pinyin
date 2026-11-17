@@ -1,0 +1,4 @@
+{"test": "desktop sentence commit", "result": "PASS", "output": "明天上午九点半开会"}
+{"test": "desktop Shift preserves typed English", "result": "PASS", "output": "hello"}
+{"test": "desktop English continuation", "result": "PASS", "output": "world"}
+{"test": "desktop Shift switches back to Chinese", "result": "PASS", "output": "输入法"}

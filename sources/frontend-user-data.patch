@@ -1,0 +1,47 @@
+--- a/src/rimeengine.cpp
++++ b/src/rimeengine.cpp
+@@ -107,9 +107,7 @@
+                 if (status.is_disabled) {
+                     result = "\xe2\x8c\x9b";
+                 } else if (status.is_ascii_mode) {
+-                    result = "A";
+-                } else if (status.schema_name && status.schema_name[0] != '.') {
+-                    result = status.schema_name;
++                    result = "en";
+                 } else {
+                     result = "中";
+                 }
+@@ -301,6 +299,12 @@
+         sharedDataDir_ = fcitx::fs::dirName(defaultYaml);
+     } else {
+         sharedDataDir_ = RIME_DATA_DIR;
++        // A user-only installation carries its complete schema set here.
++        if (!fs::isdir(sharedDataDir_)) {
++            sharedDataDir_ = stringutils::joinPath(
++                StandardPath::global().userDirectory(StandardPath::Type::PkgData),
++                "rime");
++        }
+     }
+     imAction_ = std::make_unique<IMAction>(this);
+     instance_->userInterfaceManager().registerAction("fcitx-rime-im",
+--- a/src/rimestate.cpp
++++ b/src/rimestate.cpp
+@@ -78,15 +78,9 @@
+         if (status.is_disabled) {
+             result = "";
+         } else if (status.is_ascii_mode) {
+-            result = "A";
+-        } else if (status.schema_name && status.schema_name[0] != '.') {
+-            result = status.schema_name;
+-            if (!result.empty() &&
+-                utf8::lengthValidated(result) != utf8::INVALID_LENGTH) {
+-                result = result.substr(
+-                    0, std::distance(result.begin(),
+-                                     utf8::nextChar(result.begin())));
+-            }
++            result = "en";
++        } else {
++            result = "中";
+         }
+     });
+     return result;

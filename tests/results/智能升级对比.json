@@ -1,0 +1,14 @@
+{
+  "cases": 25,
+  "changed": {
+    "jintain": {
+      "before": "今天爱你",
+      "after": "今天"
+    },
+    "wansahng": {
+      "before": "我暗杀那个",
+      "after": "晚上"
+    }
+  },
+  "other_first_candidates_unchanged": 23
+}

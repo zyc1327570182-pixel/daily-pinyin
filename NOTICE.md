@@ -1,0 +1,21 @@
+# 第三方组件、数据与修改说明
+
+日用拼音由现有开源组件组成。下表中的项目名、作者、许可证和源地址保留各自归属，不暗示上游或微软对本项目的背书。
+
+| 组件 | 来源与版本 | 许可 | 本项目处理 |
+| --- | --- | --- | --- |
+| Fcitx5 | https://github.com/fcitx/fcitx5；系统安装 | LGPL-2.1-or-later 等，上游为准 | 使用系统框架，不随包替换 |
+| fcitx5-rime | https://github.com/fcitx/fcitx5-rime；5.1.4，034ddf9 | LGPL-2.1-or-later；部分构建文件 GPL-2.0-or-later | 修改目录回退与中/en 标识；附原始源码和补丁 |
+| librime | https://github.com/rime/librime；1.17.0，a52a340 | BSD-3-Clause | 合并构建下列 Lua 与 Octagram 插件 |
+| librime-lua | https://github.com/hchunhui/librime-lua；6da5d6c | BSD-3-Clause | 合并到 librime，保留上游代码 |
+| librime-octagram | https://github.com/lotem/librime-octagram；57d18b9 | BSD-3-Clause | 合并到 librime，保留上游代码 |
+| 万象拼音 | amzxyz 及上游贡献者，https://github.com/amzxyz/rime-wanxiang；v18.1.13 Base | CC-BY-4.0，详见 wanxiang-LICENSE | 采用其方案、词库、Lua 与 OpenCC 数据；自定义补丁调整按键、显示、候选、上下文与限定拼写容错；预编译词库 |
+| 万象语法模型 | amzxyz 及上游贡献者，https://github.com/amzxyz/rime-wanxiang-data；wanxiang-lts-zh-hans.gram | CC-BY-4.0，详见 wanxiang-data-LICENSE | 模型原样使用，SHA256 见 versions.json |
+| LevelDB 1.23 | https://github.com/google/leveldb；Ubuntu 包 libleveldb1d 1.23-5build1 | BSD-3-Clause 等 | 原样附带运行库 |
+| Lua 5.4.6 | https://www.lua.org/；Ubuntu 包 liblua5.4-0 5.4.6-3build2 | MIT 等 | 原样附带运行库 |
+
+各组件完整版权文本与 Debian 包版权声明位于 `third-party/`。离线安装包的 `sources/` 附带本次构建所用的 librime、Lua 插件、Octagram 插件、fcitx5-rime 源码压缩包以及前端补丁；这些源代码的许可不被根目录 MIT 许可替换。
+
+系统提供的 glog、gflags、yaml-cpp、OpenCC、marisa、Fcitx5、C/C++ 运行库等继续由发行版维护，不随本包替换。相关归属声明也保留于 `third-party/`。
+
+Fluent Light 皮肤图片由本项目绘制，采用通用白底圆角与蓝色选中风格，未使用微软图标、字体文件或商标资产。Noto Sans CJK SC 字体由系统提供。

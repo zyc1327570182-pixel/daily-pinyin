@@ -1,0 +1,46 @@
+patch:
+  speller/algebra:
+    __patch:
+    - wanxiang_algebra:/base/全拼
+    - wanxiang_algebra:/26jian
+  menu/page_size: 5
+  schema/name: 日用拼音
+  translator/enable_user_dict: true
+  translator/enable_sentence: true
+  translator/enable_completion: true
+  super_processor/enable_backspace_limit: false
+  switches/@1/reset: 0
+  switches/@2/reset: 0
+  switches/@3/reset: 0
+  switches/@4/reset: 0
+  switches/@5/reset: 1
+  switches/@6/reset: 2
+  switches/@7/reset: 0
+  switches/@8/reset: 0
+  switches/@9/reset: 0
+  switches/@10/reset: 0
+  switches/@11/reset: 1
+  switches/@12/reset: 0
+  switches/@13/reset: 1
+  engine/translators:
+  - punct_translator
+  - script_translator
+  - lua_translator@*wanxiang.version_display
+  - lua_translator@*wanxiang.set_schema
+  - lua_translator@*wanxiang.shijian
+  - lua_translator@*wanxiang.unicode_conversion*T
+  - lua_translator@*wanxiang.number_conversion
+  - lua_translator@*wanxiang.super_calculator
+  - lua_translator@*wanxiang.random_tools
+  - lua_translator@*wanxiang.super_symbols
+  - lua_translator@*wanxiang.super_english*T
+  - table_translator@wanxiang_mixedcode
+  - reverse_lookup_translator@wanxiang_reverse
+  translator/enable_correction: false
+  translator/enable_word_completion: true
+  translator/max_word_length: 12
+  context_reorder/context_timeout: 30000
+  speller/algebra/+:
+  - derive/^([bpmfdtnlgkhjqxrzcsyw]|[zcs]h)ian$/$1ain/
+  - derive/^([zcs])h([aeiou])([a-z]*)$/$1$2h$3/
+  - derive/^([bpmfdtnlgkhjqxrzcsyw]|[zcs]h)([aeiou])n$/$1n$2/

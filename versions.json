@@ -1,0 +1,23 @@
+{
+  "name": "日用拼音",
+  "wanxiang": "v18.1.13",
+  "librime": "1.17.0",
+  "frontend": "fcitx5-rime 5.1.4 rebuilt; fallback to user schema directory when shared data absent",
+  "model": {
+    "name": "wanxiang-lts-zh-hans.gram",
+    "sha256": "d4f64356231764ff27b79c9b0db79cd9d665013464cf5544e2fbd9a71e0f1c5a"
+  },
+  "install": "user-only; no root; frontend RPATH points at bundled runtime; no system libraries modified",
+  "indicator": {
+    "Chinese": "中",
+    "English": "en"
+  },
+  "startup": "systemd-run --user; desktop AppArmor context for Snap interoperability",
+  "enhancement": {
+    "version": "2026.11.17",
+    "theme": "fluent-light",
+    "context_timeout_ms": 30000,
+    "max_learned_phrase_length": 12,
+    "targeted_typo_rules": 3
+  }
+}
