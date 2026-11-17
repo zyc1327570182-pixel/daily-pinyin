@@ -9,7 +9,7 @@
 Ubuntu 24.04 可通过系统软件管理器安装这些包；例如（依赖安装需要管理员权限）：
 
 ```bash
-sudo apt install fcitx5 fcitx5-module-xorg fcitx5-frontend-gtk3 fcitx5-frontend-gtk4 fcitx5-frontend-qt5 fcitx5-frontend-qt6 python3-yaml fonts-noto-cjk libgoogle-glog0v6t64 libgflags2.2 libyaml-cpp0.8 libopencc1.1 libmarisa0
+sudo apt install fcitx5 fcitx5-modules fcitx5-frontend-gtk3 fcitx5-frontend-gtk4 fcitx5-frontend-qt5 fcitx5-frontend-qt6 python3-yaml fonts-noto-cjk libgoogle-glog0v6t64 libgflags2.2 libyaml-cpp0.8 libopencc1.1 libmarisa0
 ```
 
 按照 [Fcitx5 的发行版配置说明](https://fcitx-im.org/wiki/Setup_Fcitx_5) 将桌面输入法框架设为 Fcitx5。包不自动改全局环境变量；首次切换框架后可能需要注销登录。

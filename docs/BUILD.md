@@ -16,7 +16,7 @@
 在 Ubuntu 24.04 上准备 CMake、G++、pkg-config、gettext、extra-cmake-modules、patchelf、patch，以及 Boost、glog、gflags、yaml-cpp、LevelDB、marisa、OpenCC、Lua 5.4、X11、Fcitx5 Core/Modules 的开发包。发行版包名可参考：
 
 ```bash
-sudo apt install build-essential cmake pkg-config gettext extra-cmake-modules patchelf patch libboost-all-dev libgoogle-glog-dev libgflags-dev libyaml-cpp-dev libleveldb-dev libmarisa-dev libopencc-dev liblua5.4-dev libx11-dev libfcitx5core-dev libfcitx5config-dev libfcitx5utils-dev libfcitx5modules-dev
+sudo apt install build-essential cmake pkg-config gettext extra-cmake-modules patchelf patch libboost-all-dev libgoogle-glog-dev libgflags-dev libyaml-cpp-dev libleveldb-dev libmarisa-dev libopencc-dev liblua5.4-dev libx11-dev libfcitx5core-dev libfcitx5config-dev libfcitx5utils-dev fcitx5-modules-dev
 ```
 
 将离线包中的四份源码压缩包放在仓库 `sources/` 下，再运行：
