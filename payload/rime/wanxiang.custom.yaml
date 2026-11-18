@@ -23,7 +23,6 @@ patch:
   switches/@12/reset: 0
   switches/@13/reset: 1
   engine/translators:
-  - predict_translator
   - punct_translator
   - script_translator
   - lua_translator@*wanxiang.version_display
@@ -45,14 +44,3 @@ patch:
   - derive/^([bpmfdtnlgkhjqxrzcsyw]|[zcs]h)ian$/$1ain/
   - derive/^([zcs])h([aeiou])([a-z]*)$/$1$2h$3/
   - derive/^([bpmfdtnlgkhjqxrzcsyw]|[zcs]h)([aeiou])n$/$1n$2/
-  engine/processors/@before 0: predictor
-  switches/+:
-  - name: prediction
-    states:
-    - 联想关
-    - 联想开
-    reset: 1
-  predictor/db: daily-predict.db
-  predictor/max_candidates: 5
-  predictor/max_iterations: 3
-  super_processor/enable_predict_space: false

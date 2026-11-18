@@ -45,14 +45,6 @@ def main():
         schema=yaml.safe_load((stage/'payload/rime/build/wanxiang.schema.yaml').read_text())
         if schema['translator']['max_word_length']!=12 or schema['context_reorder']['context_timeout']!=30000:
             raise SystemExit('Compiled schema does not match this version; redeploy and test before packaging.')
-        if 'prediction' in json.loads((stage/'versions.json').read_text()):
-            if 'predictor' not in schema['engine']['processors'] or not (stage/'payload/rime/daily-predict.db').is_file():
-                raise SystemExit('Prediction runtime/data/schema missing; deploy and validate the updated payload first.')
-            expected=json.loads((stage/'versions.json').read_text())['prediction']['database_sha256']
-            if hashlib.sha256((stage/'payload/rime/daily-predict.db').read_bytes()).hexdigest()!=expected:
-                raise SystemExit('Prediction database hash mismatch')
-            if b'predict_translator' not in (stage/'payload/runtime/lib/librime.so.1.17.0').read_bytes():
-                raise SystemExit('Supplied native runtime does not include prediction support')
         digest=hashlib.sha256((stage/'payload/rime/wanxiang-lts-zh-hans.gram').read_bytes()).hexdigest()
         if digest!=json.loads((stage/'versions.json').read_text())['model']['sha256']:raise SystemExit('Model hash mismatch')
         if a.online:(stage/'payload/rime/wanxiang-lts-zh-hans.gram').unlink()

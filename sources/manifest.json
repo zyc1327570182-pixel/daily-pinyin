@@ -1,7 +1,6 @@
 {
   "frontend-source.tar.gz": "488b017c6f54754217f48d6a2929605afc6ccf63c2837600d7a92059e00b90a7",
+  "librime-source.tar.gz": "da1fc48836741fd03a3d1e19e042fafd5ed38caf11b3299e641f791ec83aadc2",
   "lua-source.tar.gz": "3c7152b0bce2c0a3608279a5268e4d5086d356da7454230e3cfebb1c9936dfca",
-  "predict-source.tar.gz": "ed8eebfd058a6c3fa0ed64c2d212710ba3cb8e2543e617198c3d50f8520ae10c",
-  "octagram-source.tar.gz": "2700aca7ea378dbb3ac2b8976f99fda4a4928ffb23f615a8e7273d622740dc01",
-  "librime-source.tar.gz": "da1fc48836741fd03a3d1e19e042fafd5ed38caf11b3299e641f791ec83aadc2"
+  "octagram-source.tar.gz": "2700aca7ea378dbb3ac2b8976f99fda4a4928ffb23f615a8e7273d622740dc01"
 }

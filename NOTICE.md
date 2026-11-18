@@ -25,11 +25,3 @@ Fluent Light 皮肤图片由本项目绘制，采用通用白底圆角与蓝色�
 `src/clipboard/` 基于 Fcitx5 5.1.7 的剪贴板模块（CSSlayer 及贡献者，LGPL-2.1-or-later），保留版权头和完整修改后源码。修改包括：方向键选择与跨页、翻页自动选中、Delete 单项删除、Backspace 不删除、清空二次确认与中文操作提示。`orderedset.h` 是上游 `misc_p.h` 中 OrderedSet 的原样提取，保留原许可。
 
 当前预编译扩展通过 X11/XWayland 收集文本，在已验证的 GNOME Wayland 桌面通过 XWayland 剪贴板桥接使用；原生 wlr-data-control 支持不在此构建中启用。系统 Fcitx5 库保持原样。
-
-## 下一词联想插件和数据
-
-采用 [rime/librime-predict](https://github.com/rime/librime-predict) 的 920bd41 源码及 data-1.0 发布中的 predict.txt。保留其 BSD-3-Clause 许可证于 `third-party/librime-predict-LICENSE`，原始源码归档的 SHA256 见 sources/manifest.json。
-
-本项目修改记录于 `sources/predict-user-experience.patch`：不默认选中建议、Enter 防误选、空格及标点透传、显式方向键选择、上下文重置防止旧候选重现、会话独立、候选数限制和整句末尾回退。前端补丁增加“联想”标题并阻止切换输入法时提交零编码建议。
-
-数据经 OpenCC t2s 转为简体，合并重复键值并保留最高频次，过滤非中文项，每个上下文最多保留 16 个接词供引擎取前 5 个。原始来源和输入/输出哈希见 sources/prediction-data.json。输入过程不下载数据、不访问网络、不读取其他应用输入框。

@@ -45,19 +45,6 @@ cd daily-pinyin-v0.1.0
 
 已有旧版日用拼音，请运行 `./upgrade.sh`。恢复最初安装前的配置用 `./restore.sh`；仅撤销最近一次智能与皮肤升级用 `./restore-upgrade.sh`。详情见 [安装与恢复](docs/INSTALL.md)。
 
-## 下一词联想
-
-选词上屏后，候选框会显示带“联想”标题的接词建议，例如“谢谢”之后的“你、你们、大家”。使用本地统计词表，包含约 16.8 万个上下文，不需要网络。
-
-![联想候选框实际预览](docs/prediction-preview.png)
-
-- 数字 1–5 或鼠标选择；也可用上下键选中后按 Enter 接词。
-- 联想默认没有选中项；直接 Enter 保持应用原有的发送/换行，空格原样输入。
-- 继续打拼音立即恢复普通候选；Esc 或 Backspace 收起联想。
-- Shift 转英文、标点、切换输入法或输入框不会自动提交尚未选择的建议。
-
-已有日用拼音使用包含完整运行库和联想词表的升级包执行 `./upgrade-prediction.sh`。可用 `./upgrade-prediction.sh --restore` 撤销；`--disable` 将联想设为默认关闭。原个人词库保留。源代码压缩包不含运行库与联想词表，不能直接作为升级包执行。测试与构建见 [联想说明](docs/PREDICTION.md)。
-
 ## 启用剪贴板历史
 
 安装后在桌面终端运行 `./enable-clipboard.sh`，即可在输入框中按 **Win+V**（或 Ctrl+分号）打开历史，上下方向键选取、左右方向键翻页、Enter 插入、Esc 关闭；Delete 仅删当前项，Ctrl+Shift+Delete 后 Enter 确认清空。最多 20 条文本，仅保存在当前输入法进程内存中，重启后清空。支持英文键盘状态。
