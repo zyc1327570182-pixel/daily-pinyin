@@ -40,7 +40,8 @@ def main():
         patch = current.setdefault('patch', {})
         update = yaml.safe_load((ROOT/'payload/rime/wanxiang.custom.yaml').read_text())['patch']
         for k in ['translator/enable_correction', 'translator/enable_word_completion',
-                  'translator/max_word_length', 'context_reorder/context_timeout']:
+                  'translator/max_word_length', 'context_reorder/context_timeout',
+                  'key_binder/bindings', 'super_comment/candidate_length']:
             patch[k] = update[k]
         rules = patch.setdefault('speller/algebra/+', [])
         for rule in update['speller/algebra/+']:

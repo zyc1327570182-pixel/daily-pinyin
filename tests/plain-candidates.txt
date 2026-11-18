@@ -1,0 +1,2 @@
+reproduced: initial=0, after Ctrl+A=5
+fixed: initial=0, after Ctrl+A=0, shortcuts forwarded=1, forced hint remains hidden=1

@@ -44,3 +44,118 @@ patch:
   - derive/^([bpmfdtnlgkhjqxrzcsyw]|[zcs]h)ian$/$1ain/
   - derive/^([zcs])h([aeiou])([a-z]*)$/$1$2h$3/
   - derive/^([bpmfdtnlgkhjqxrzcsyw]|[zcs]h)([aeiou])n$/$1n$2/
+  key_binder/bindings:
+  - accept: minus
+    send: Page_Up
+    when: has_menu
+  - accept: equal
+    send: Page_Down
+    when: has_menu
+  - accept: Control+k
+    toggle: xxxxx
+    when: composing
+  - accept: KP_0
+    send: 0
+    when: composing
+  - accept: KP_1
+    send: 1
+    when: composing
+  - accept: KP_2
+    send: 2
+    when: composing
+  - accept: KP_3
+    send: 3
+    when: composing
+  - accept: KP_4
+    send: 4
+    when: composing
+  - accept: KP_5
+    send: 5
+    when: composing
+  - accept: KP_6
+    send: 6
+    when: composing
+  - accept: KP_7
+    send: 7
+    when: composing
+  - accept: KP_8
+    send: 8
+    when: composing
+  - accept: KP_9
+    send: 9
+    when: composing
+  - accept: KP_Decimal
+    send: period
+    when: composing
+  - accept: KP_Multiply
+    send: asterisk
+    when: composing
+  - accept: KP_Add
+    send: plus
+    when: composing
+  - accept: KP_Subtract
+    send: minus
+    when: composing
+  - accept: KP_Divide
+    send: slash
+    when: composing
+  - accept: KP_Enter
+    send: Return
+    when: composing
+  - accept: minus
+    send: Page_Up
+    when: has_menu
+  - accept: equal
+    send: Page_Down
+    when: has_menu
+  - accept: Control+Shift+3
+    toggle: ascii_punct
+    when: always
+  - accept: Control+Shift+numbersign
+    toggle: ascii_punct
+    when: always
+  - accept: Control+Shift+4
+    toggle: s2t
+    when: always
+  - accept: Control+Shift+dollar
+    toggle: s2t
+    when: always
+  - accept: Alt+Left
+    send: Shift+Left
+    when: composing
+  - accept: Alt+Right
+    send: Shift+Right
+    when: composing
+  - accept: Control+w
+    send: Control+BackSpace
+    when: composing
+  - accept: Control+e
+    toggle: english_chinese
+    when: has_menu
+  - accept: Control+t
+    toggle: super_tips
+    when: has_menu
+  - accept: Control+g
+    toggle: charset_filter
+    when: has_menu
+  - accept: Control+g
+    toggle: charset_filter
+    when: composing
+  - accept: Shift+space
+    select: .next
+    when: always
+  - accept: Tab
+    send: Control+Right
+    when: has_menu
+  - accept: Tab
+    send: Control+Right
+    when: composing
+  - accept: Control+Tab
+    send_sequence: '{Home}{Shift+Right}{1}{Shift+Right}'
+    when: composing
+  - accept: /
+    match: ^/$
+    send_sequence: '{space}'
+  - accept: Shift+Return
+    send_sequence: '{option:tone_display=true}{Shift+Return}{option:tone_display=false}'
+  super_comment/candidate_length: 0
