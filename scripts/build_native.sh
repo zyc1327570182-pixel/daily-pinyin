@@ -4,12 +4,14 @@ set -euo pipefail
 project_dir="$(cd -- "$(dirname -- "$0")/.." && pwd)"
 build_dir="${1:-$project_dir/build/native}"
 mkdir -p "$build_dir/src" "$build_dir/prefix"
-for component in librime lua octagram frontend; do
+for component in librime lua octagram frontend predict; do
   mkdir -p "$build_dir/src/$component"
   tar -xzf "$project_dir/sources/$component-source.tar.gz" --strip-components=1 -C "$build_dir/src/$component"
 done
 cp -a "$build_dir/src/lua" "$build_dir/src/librime/plugins/lua"
 cp -a "$build_dir/src/octagram" "$build_dir/src/librime/plugins/octagram"
+cp -a "$build_dir/src/predict" "$build_dir/src/librime/plugins/predict"
+patch -d "$build_dir/src/librime/plugins/predict" -p1 < "$project_dir/sources/predict-user-experience.patch"
 patch -d "$build_dir/src/frontend" -p1 < "$project_dir/sources/frontend-user-data.patch"
 cmake -S "$build_dir/src/librime" -B "$build_dir/rime" \
   -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX="$build_dir/prefix" \

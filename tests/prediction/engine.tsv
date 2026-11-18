@@ -1,0 +1,31 @@
+PASS	new context does not show unsolicited predictions
+PASS	committing Chinese opens next-word candidates
+PASS	at most five prediction candidates
+PASS	today has an evening continuation
+CANDIDATES	今天	的	是	我	晚上	早上
+PASS	number selects intended prediction without repeating previous text
+PASS	Down and Enter select the next word
+PASS	unarmed Enter preserves application Send/Newline without accepting a prediction
+PASS	Space inserts a literal space and dismisses predictions
+PASS	key release does not reopen dismissed predictions
+PASS	typing replaces predictions with regular Pinyin immediately
+PASS	continuing Pinyin does not lose or duplicate a character
+PASS	punctuation does not accidentally select a prediction
+PASS	out-of-range digit is entered literally
+PASS	Escape dismisses predictions without extra output
+PASS	typing resumes after Escape
+PASS	Backspace dismisses without inserting anything
+PASS	Shift switches to English and clears predictions
+PASS	English letters remain literal after prediction
+PASS	returning to Chinese does not resurrect old predictions
+PASS	Shift switches to English and clears predictions
+PASS	English letters remain literal after prediction
+PASS	returning to Chinese does not resurrect old predictions
+PASS	external reset/focus change does not resurrect old predictions
+PASS	turning prediction off dismisses an already visible suggestion
+PASS	prediction switch disables suggestions
+PASS	sentence commit can predict from its ending
+PASS	Shift still preserves partially typed English
+PASS	thanks predicts a natural continuation
+CANDIDATES	谢谢	你	你们	大家	了	楼主
+PASS	prediction chaining stops at the configured limit

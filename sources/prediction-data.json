@@ -1,0 +1,8 @@
+{
+  "source": "https://github.com/rime/librime-predict/releases/tag/data-1.0",
+  "asset": "predict.txt",
+  "upstream_sha256": "df0f7a9ef96569da402d9ea2376aefad4d15382ebcccb05ec84a0acbc00c7f83",
+  "transform": "OpenCC t2s; Chinese-only; deduplicated by maximum weight; up to 16 next words per context",
+  "contexts": 168857,
+  "tsv_sha256": "5839478e61655e9d530c024402f01eb9ddbac1840ce5b70c4e371d09fc013e1c"
+}

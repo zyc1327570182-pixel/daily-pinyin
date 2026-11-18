@@ -1,0 +1,4 @@
+PASS upgrade compiles actual user schema and preserves personal words, user state and original backup pointer
+PASS undo restores previous runtime and compiled configuration without deleting personal words
+PASS default-off mode compiles and can be undone while preserving personal words
+PASS failed deployment rolls back both runtime and schema without deleting personal words

@@ -1,0 +1,75 @@
+{
+  "checks": [
+    {
+      "test": "desktop commits only the word chosen by the user",
+      "result": "PASS"
+    },
+    {
+      "test": "candidate panel clearly labels predictions",
+      "result": "PASS"
+    },
+    {
+      "test": "number 4 chooses the displayed continuation",
+      "result": "PASS"
+    },
+    {
+      "test": "continuing Pinyin immediately replaces prediction candidates",
+      "result": "PASS"
+    },
+    {
+      "test": "desktop Space remains a literal space",
+      "result": "PASS"
+    },
+    {
+      "test": "Down and Enter confirm the highlighted prediction",
+      "result": "PASS"
+    },
+    {
+      "test": "Enter without explicit selection preserves the application Send/Newline action",
+      "result": "PASS"
+    },
+    {
+      "test": "switching input methods does not commit an unchosen prediction",
+      "result": "PASS"
+    },
+    {
+      "test": "Shift switches to literal English without stray prediction text",
+      "result": "PASS"
+    },
+    {
+      "test": "a new input field does not inherit another fields predictions",
+      "result": "PASS"
+    },
+    {
+      "test": "typing still works in the second input field",
+      "result": "PASS"
+    },
+    {
+      "test": "returning to the first field does not restore stale predictions",
+      "result": "PASS"
+    },
+    {
+      "test": "Win+V opens clipboard while predictions are visible",
+      "result": "PASS"
+    },
+    {
+      "test": "clipboard selection inserts exactly the chosen text",
+      "result": "PASS"
+    },
+    {
+      "test": "clipboard use does not resurrect a previous prediction",
+      "result": "PASS"
+    },
+    {
+      "test": "password field receives literal text without prediction candidates",
+      "result": "PASS"
+    },
+    {
+      "test": "native skin renders both prediction and regular composition panels",
+      "result": "PASS"
+    }
+  ],
+  "round_trips": 134,
+  "key_event_p95_ms": 6.66,
+  "key_event_max_ms": 10.67
+}

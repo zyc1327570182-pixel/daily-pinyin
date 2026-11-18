@@ -45,3 +45,43 @@
          }
      });
      return result;
+@@ -278,6 +272,7 @@
+         inputPanel.reset();
+     }
+     bool oldEmptyExceptAux = emptyExceptAux(inputPanel);
++    bool predictionPanel = false;
+ 
+     do {
+         auto api = engine_->api();
+@@ -295,6 +290,13 @@
+         }
+ 
+         updatePreedit(ic, context);
++        predictionPanel = context.composition.length == 0 && context.menu.num_candidates > 0;
++        if (predictionPanel) {
++            inputPanel.setAuxUp(Text("联想"));
++            char selection[16] = {};
++            api->get_property(session, "daily_prediction_selection", selection, sizeof(selection));
++            if (std::string(selection) != "armed") context.menu.highlighted_candidate_index = -1;
++        }
+ 
+         if (context.menu.num_candidates) {
+             ic->inputPanel().setCandidateList(
+@@ -312,7 +314,7 @@
+     bool newEmptyExceptAux = emptyExceptAux(inputPanel);
+     // If it's key release and old information is not "empty", do the rest of
+     // "reset".
+-    if (keyRelease && !newEmptyExceptAux) {
++    if (keyRelease && !newEmptyExceptAux && !predictionPanel) {
+         inputPanel.setAuxUp(Text());
+         inputPanel.setAuxDown(Text());
+     }
+@@ -336,7 +338,7 @@
+         if (!api->get_context(session, &context)) {
+             return;
+         }
+-        if (context.commit_text_preview) {
++        if (context.composition.length > 0 && context.commit_text_preview) {
+             ic->commitString(context.commit_text_preview);
+         }
+         api->free_context(&context);

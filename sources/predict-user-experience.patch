@@ -1,0 +1,228 @@
+--- a/src/predict_engine.cc
++++ b/src/predict_engine.cc
+@@ -28,14 +28,18 @@
+ 
+ bool PredictEngine::Predict(Context* ctx, const string& context_query) {
+   DLOG(INFO) << "PredictEngine::Predict [" << context_query << "]";
+-  if (const auto* candidates = db_->Lookup(context_query)) {
+-    query_ = context_query;
+-    candidates_ = candidates;
+-    return true;
+-  } else {
+-    Clear();
+-    return false;
++  // Prefer the full committed phrase; fall back to a suffix for sentence commits.
++  for (size_t offset = 0; offset < context_query.size(); ++offset) {
++    if ((static_cast<unsigned char>(context_query[offset]) & 0xc0) == 0x80) continue;
++    const auto query = context_query.substr(offset);
++    if (const auto* candidates = db_->Lookup(query)) {
++      query_ = query;
++      candidates_ = candidates;
++      return true;
++    }
+   }
++  Clear();
++  return false;
+ }
+ 
+ void PredictEngine::Clear() {
+@@ -105,7 +109,7 @@
+ 
+ an<PredictEngine> PredictEngineComponent::GetInstance(const Ticket& ticket) {
+   if (Schema* schema = ticket.schema) {
+-    auto found = predict_engine_by_schema_id.find(schema->schema_id());
++    auto found = predict_engine_by_schema_id.find(ticket.engine);
+     if (found != predict_engine_by_schema_id.end()) {
+       if (auto instance = found->second.lock()) {
+         return instance;
+@@ -113,7 +117,7 @@
+     }
+     an<PredictEngine> new_instance{Create(ticket)};
+     if (new_instance) {
+-      predict_engine_by_schema_id[schema->schema_id()] = new_instance;
++      predict_engine_by_schema_id[ticket.engine] = new_instance;
+       return new_instance;
+     }
+   }
+--- a/src/predict_engine.h
++++ b/src/predict_engine.h
+@@ -8,6 +8,7 @@
+ namespace rime {
+ 
+ class Context;
++class Engine;
+ struct Segment;
+ struct Ticket;
+ class Translation;
+@@ -48,7 +49,7 @@
+   an<PredictEngine> GetInstance(const Ticket& ticket);
+ 
+  protected:
+-  map<string, weak<PredictEngine>> predict_engine_by_schema_id;
++  map<Engine*, weak<PredictEngine>> predict_engine_by_schema_id;
+   DbPool<PredictDb> db_pool_;
+ };
+ 
+--- a/src/predict_translator.cc
++++ b/src/predict_translator.cc
+@@ -31,9 +31,10 @@
+     auto translation = New<FifoTranslation>();
+     size_t end = segment.end;
+     for (int i = 0; i < num_candidates; ++i) {
+-      translation->Append(New<SimpleCandidate>("prediction", end, end,
+-                                               predict_engine_->candidate(i)));
+-      if (max_candidates > 0 && i >= max_candidates)
++      auto candidate = New<SimpleCandidate>("prediction", end, end,
++                                               predict_engine_->candidate(i));
++      translation->Append(candidate);
++      if (max_candidates > 0 && i + 1 >= max_candidates)
+         break;
+     }
+     return translation;
+--- a/src/predictor.cc
++++ b/src/predictor.cc
+@@ -18,6 +18,21 @@
+     : Processor(ticket), predict_engine_(predict_engine) {
+   // update prediction on context change.
+   auto* context = engine_->context();
++  option_connection_ = context->option_update_notifier().connect(
++      [this](Context* ctx, const string& option) {
++        if (!predict_engine_) return;
++        if ((option == "prediction" && !ctx->get_option(option)) ||
++            (option == "ascii_mode" && ctx->get_option(option))) {
++          pending_commit_ = false;
++          last_action_ = kDelete;
++          iteration_counter_ = 0;
++          selection_armed_ = false;
++          predict_engine_->Clear();
++          if (!ctx->composition().empty() && ctx->composition().back().HasTag("prediction")) ctx->Clear();
++        }
++      });
++  commit_connection_ = context->commit_notifier().connect(
++      [this](Context*) { pending_commit_ = true; });
+   select_connection_ = context->select_notifier().connect(
+       [this](Context* ctx) { OnSelect(ctx); });
+   context_update_connection_ = context->update_notifier().connect(
+@@ -26,22 +41,61 @@
+ 
+ Predictor::~Predictor() {
+   select_connection_.disconnect();
++  commit_connection_.disconnect();
++  option_connection_.disconnect();
+   context_update_connection_.disconnect();
+ }
+ 
+ ProcessResult Predictor::ProcessKeyEvent(const KeyEvent& key_event) {
+-  if (!engine_ || !predict_engine_)
+-    return kNoop;
+-  auto keycode = key_event.keycode();
+-  if (keycode == XK_BackSpace || keycode == XK_Escape) {
++  if (!engine_ || !predict_engine_ || key_event.release()) return kNoop;
++  auto* ctx = engine_->context();
++  const auto keycode = key_event.keycode();
++  const bool predicting = ctx->input().empty() && !ctx->composition().empty() &&
++      ctx->composition().back().HasTag("prediction");
++  if (predicting && !key_event.ctrl() && !key_event.alt() && !key_event.super()) {
++    if (keycode == XK_Return || keycode == XK_KP_Enter) {
++      if (selection_armed_) {
++        ctx->Select(ctx->composition().back().selected_index);
++        return kAccepted;
++      }
++      last_action_ = kDelete;
++      pending_commit_ = false;
++      predict_engine_->Clear();
++      ctx->Clear();
++      return kNoop; // Preserve the application's Send/Newline action.
++    }
++    if (keycode == XK_Up || keycode == XK_Down) {
++      auto& segment = ctx->composition().back();
++      const auto count = segment.menu->Prepare(5);
++      if (count) {
++        const auto index = segment.selected_index;
++        const auto next = !selection_armed_ ? (keycode == XK_Down ? 0 : count - 1) :
++            (keycode == XK_Down ? (index + 1) % count : (index + count - 1) % count);
++        selection_armed_ = true;
++        ctx->set_property("daily_prediction_selection", "armed");
++        ctx->Highlight(next);
++      }
++      return kAccepted;
++    }
++  }
++  const bool dismiss = keycode == XK_BackSpace || keycode == XK_Escape;
++  const bool editing = keycode == XK_Left || keycode == XK_Right ||
++      keycode == XK_Home || keycode == XK_End || keycode == XK_Delete || keycode == XK_Tab;
++  const bool modifier = keycode == XK_Shift_L || keycode == XK_Shift_R ||
++      keycode == XK_Control_L || keycode == XK_Control_R ||
++      keycode == XK_Alt_L || keycode == XK_Alt_R || keycode == XK_Caps_Lock ||
++      key_event.ctrl() || key_event.alt() || key_event.super();
++  const bool printable = keycode >= 0x20 && keycode <= 0x7e;
++  const bool selection = keycode >= '1' && keycode <= '5';
++  if (dismiss || (predicting && (editing || modifier || (printable && !selection)))) {
+     last_action_ = kDelete;
+     predict_engine_->Clear();
+     iteration_counter_ = 0;
+-    auto* ctx = engine_->context();
+-    if (!ctx->composition().empty() &&
+-        ctx->composition().back().HasTag("prediction")) {
++    selection_armed_ = false;
++    if (predicting) {
+       ctx->Clear();
+-      return kAccepted;
++      // Escape/Backspace dismiss only; all other keys retain normal behavior.
++      return dismiss ? kAccepted : kNoop;
+     }
+   } else {
+     last_action_ = kUnspecified;
+@@ -55,15 +109,12 @@
+ 
+ void Predictor::OnContextUpdate(Context* ctx) {
+   if (self_updating_ || !predict_engine_ || !ctx ||
+-      !ctx->composition().empty() || !ctx->get_option("prediction") ||
+-      last_action_ == kDelete) {
+-    return;
+-  }
++      !ctx->composition().empty() || !pending_commit_) return;
++  pending_commit_ = false;
++  if (!ctx->get_option("prediction") || ctx->get_option("ascii_mode") ||
++      last_action_ == kDelete) return;
+   LOG(INFO) << "Predictor::OnContextUpdate";
+-  if (ctx->commit_history().empty()) {
+-    PredictAndUpdate(ctx, "$");
+-    return;
+-  }
++  if (ctx->commit_history().empty()) return;
+   auto last_commit = ctx->commit_history().back();
+   if (last_commit.type == "punct" || last_commit.type == "raw" ||
+       last_commit.type == "thru") {
+@@ -85,11 +136,14 @@
+       return;
+     }
+   }
++  if (last_commit.type != "prediction") iteration_counter_ = 0;
+   PredictAndUpdate(ctx, last_commit.text);
+ }
+ 
+ void Predictor::PredictAndUpdate(Context* ctx, const string& context_query) {
+   if (predict_engine_->Predict(ctx, context_query)) {
++    selection_armed_ = false;
++    ctx->set_property("daily_prediction_selection", "idle");
+     predict_engine_->CreatePredictSegment(ctx);
+     self_updating_ = true;
+     ctx->update_notifier()(ctx);
+--- a/src/predictor.h
++++ b/src/predictor.h
+@@ -25,10 +25,14 @@
+   enum Action { kUnspecified, kSelect, kDelete };
+   Action last_action_ = kUnspecified;
+   bool self_updating_ = false;
++  bool pending_commit_ = false;
++  bool selection_armed_ = false;
+   int iteration_counter_ = 0;  // times has been predicted
+ 
+   an<PredictEngine> predict_engine_;
+   connection select_connection_;
++  connection commit_connection_;
++  connection option_connection_;
+   connection context_update_connection_;
+ };
+ 

@@ -28,5 +28,16 @@
     "entries": 20,
     "storage": "process memory",
     "setup": "enable-clipboard.sh"
+  },
+  "prediction": {
+    "plugin": "rime/librime-predict @ 920bd41",
+    "enabled_by_default": true,
+    "max_candidates": 5,
+    "max_chain": 3,
+    "contexts": 168857,
+    "database_sha256": "d4785773a2d5de566193c6416a300409ee81ec487597adefb8a81941adef48cb",
+    "data_source": "data-1.0/predict.txt; OpenCC t2s conversion",
+    "interaction": "No default selection; numbers or arrows then Enter accept; Space and unarmed Enter preserve application behavior",
+    "date": "2026-11-18"
   }
 }
